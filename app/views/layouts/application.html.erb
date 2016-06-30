@@ -11,8 +11,8 @@
           type='text/css'>
 
     <%= stylesheet_link_tag 'application', media: 'all' %>
-
     <%= csrf_meta_tags %>
+
   </head>
 
   <body>
@@ -24,10 +24,10 @@
 
     <% end %>
 
-  <center>
-    <%= render "layouts/errors" %>
-    <%= yield %>
-  </center>
+    <center>
+      <%= render "layouts/errors" %>
+      <%= yield %>
+    </center>
 
 
   </body>

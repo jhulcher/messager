@@ -60,7 +60,6 @@ var Index = React.createClass({
             )
           }.bind(this))
         }
-
       </div>
     )
   }

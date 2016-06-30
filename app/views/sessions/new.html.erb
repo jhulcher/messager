@@ -1,12 +1,11 @@
 <div class="splash">
+  
   <div class="title">
     Instant Messaging
   </div>
 
   <form action="<%= session_url %>" method="post">
-
     <%= auth_token_input %>
-
     <input type="text"
            maxLength="10"
            class="login_username"
@@ -23,16 +22,14 @@
     <div>
       <input type="submit" value="Sign In!" class="login">
     </div>
-
   </form>
 
   <div class="">
-
     <div class="">
       <div class="">
         <%= link_to "Create New Account", new_user_url %>
       </div>
     </div>
-
   </div>
+
 </div>
