@@ -3,6 +3,7 @@ var React = require("react");
 var Nav = require("./nav.jsx");
 var LinkedStateMixin = require('react-addons-linked-state-mixin');
 var MessageStore = require("../stores/messages.js");
+var cur = window.current_user_id
 
 var History = require("react-router").History;
 
@@ -27,13 +28,14 @@ var User = React.createClass({
   },
 
   componentDidMount: function () {
-    setInterval(function () {
+    interval = setInterval(function () {
       ApiUtil.fetchMessages(parseInt(this.props.location.query.id));
     }.bind(this), 500);
   },
 
   componentWillUnmount: function () {
     this.listener.remove();
+    clearInterval(interval);
   },
 
   createMessage: function (e) {
@@ -51,40 +53,80 @@ var User = React.createClass({
 
   render: function () {
     return (
-      <div className="">
-
+      <div className="full-page">
         <Nav></Nav>
-
         <div>
           {
             this.state.messages.map (function (message, idx) {
-              return (
-                <div key={message.message_id * 97}>
-                  <div>
-                    { message.author }
+              if (!(message.body)) {
+                return (
+                    <header>
+                      {"Messages with" + " " + message.friend + ":"}
+                    </header>
+                )
+              } else if (idx == 0 && message.user_id != cur) {
+                return (
+                  <div key={idx * 17}>
+                    <header>
+                      {"Messages with" + " " + message.friend + ":"}
+                    </header>
+                    <div className="message-left">
+                      <div className="">
+                        { message.body }
+                      </div>
+                    </div>
                   </div>
-                  <div className="">
-                    { message.body }
+                )
+              } else if (idx == 0 && message.user_id == cur) {
+                return (
+                  <div key={idx * 17}>
+                    <header>
+                      {"Messages with" + " " + message.friend + ":"}
+                    </header>
+                    <div className="message-right">
+                      <div className="">
+                        { message.body }
+                      </div>
+                    </div>
                   </div>
-                </div>
-              )
+                )
+              }else if (message.user_id != cur) {
+                return (
+                  <div className="message-left"
+                       key={idx * 17}>
+                    <div className="">
+                      { message.body }
+                    </div>
+                  </div>
+                )
+              } else {
+                return (
+                  <div className="message-right"
+                       key={idx * 17}>
+                    <div className="">
+                      { message.body }
+                    </div>
+                  </div>
+                )
+              }
             }.bind(this))
           }
-          <div>
+          <div className="message-box">
             <input type="text"
                    maxLength="140"
                    className=""
                    placeholder="New Message"
                    valueLink={this.linkState('content')}/>
-            <button onClick={this.createMessage}>
-              New Post
-            </button>
+            <div>
+              <button onClick={this.createMessage}>
+                New Message
+              </button>
+            </div>
           </div>
         </div>
       </div>
     )
   }
-
 });
 
 module.exports = User;

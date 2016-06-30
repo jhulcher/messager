@@ -11,6 +11,10 @@ class Api::UsersController < ApplicationController
     @messages1 = Message.where(talker_id: current_user.id, listener_id: @user.id)
     @messages2 = Message.where(talker_id: @user.id, listener_id: current_user.id)
     @messages = ((@messages1.concat(@messages2)).sort_by { |mess| mess.created_at }).uniq
+
+    if @messages.empty?
+      @user = [@user]
+    end
   end
 
 

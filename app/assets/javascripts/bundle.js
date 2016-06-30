@@ -50,7 +50,7 @@
 	var ReactRouter = __webpack_require__(166);
 	
 	var User = __webpack_require__(217);
-	var Index = __webpack_require__(240);
+	var Index = __webpack_require__(241);
 	
 	var Route = ReactRouter.Route;
 	
@@ -19747,7 +19747,6 @@
 	      },
 	      success: function (response) {
 	        ApiActions.receiveMessages(response);
-	        // socket.emit("RECEIVE_MESSAGES", ApiActions.receiveMessages(response));
 	      }
 	    });
 	  },
@@ -24896,9 +24895,10 @@
 
 	var ApiUtil = __webpack_require__(159);
 	var React = __webpack_require__(1);
-	var Nav = __webpack_require__(242);
-	var LinkedStateMixin = __webpack_require__(218);
-	var MessageStore = __webpack_require__(222);
+	var Nav = __webpack_require__(218);
+	var LinkedStateMixin = __webpack_require__(219);
+	var MessageStore = __webpack_require__(223);
+	var cur = window.current_user_id;
 	
 	var History = __webpack_require__(166).History;
 	
@@ -24923,13 +24923,14 @@
 	  },
 	
 	  componentDidMount: function () {
-	    setInterval(function () {
+	    interval = setInterval(function () {
 	      ApiUtil.fetchMessages(parseInt(this.props.location.query.id));
 	    }.bind(this), 500);
 	  },
 	
 	  componentWillUnmount: function () {
 	    this.listener.remove();
+	    clearInterval(interval);
 	  },
 	
 	  createMessage: function (e) {
@@ -24948,45 +24949,101 @@
 	  render: function () {
 	    return React.createElement(
 	      "div",
-	      { className: "" },
+	      { className: "full-page" },
 	      React.createElement(Nav, null),
 	      React.createElement(
 	        "div",
 	        null,
 	        this.state.messages.map(function (message, idx) {
-	          return React.createElement(
-	            "div",
-	            { key: message.message_id * 97 },
-	            React.createElement(
-	              "div",
+	          if (!message.body) {
+	            return React.createElement(
+	              "header",
 	              null,
-	              message.author
-	            ),
-	            React.createElement(
+	              "Messages with" + " " + message.friend + ":"
+	            );
+	          } else if (idx == 0 && message.user_id != cur) {
+	            return React.createElement(
 	              "div",
-	              { className: "" },
-	              message.body
-	            )
-	          );
+	              { key: idx * 17 },
+	              React.createElement(
+	                "header",
+	                null,
+	                "Messages with" + " " + message.friend + ":"
+	              ),
+	              React.createElement(
+	                "div",
+	                { className: "message-left" },
+	                React.createElement(
+	                  "div",
+	                  { className: "" },
+	                  message.body
+	                )
+	              )
+	            );
+	          } else if (idx == 0 && message.user_id == cur) {
+	            return React.createElement(
+	              "div",
+	              { key: idx * 17 },
+	              React.createElement(
+	                "header",
+	                null,
+	                "Messages with" + " " + message.friend + ":"
+	              ),
+	              React.createElement(
+	                "div",
+	                { className: "message-right" },
+	                React.createElement(
+	                  "div",
+	                  { className: "" },
+	                  message.body
+	                )
+	              )
+	            );
+	          } else if (message.user_id != cur) {
+	            return React.createElement(
+	              "div",
+	              { className: "message-left",
+	                key: idx * 17 },
+	              React.createElement(
+	                "div",
+	                { className: "" },
+	                message.body
+	              )
+	            );
+	          } else {
+	            return React.createElement(
+	              "div",
+	              { className: "message-right",
+	                key: idx * 17 },
+	              React.createElement(
+	                "div",
+	                { className: "" },
+	                message.body
+	              )
+	            );
+	          }
 	        }.bind(this)),
 	        React.createElement(
 	          "div",
-	          null,
+	          { className: "message-box" },
 	          React.createElement("input", { type: "text",
 	            maxLength: "140",
 	            className: "",
 	            placeholder: "New Message",
 	            valueLink: this.linkState('content') }),
 	          React.createElement(
-	            "button",
-	            { onClick: this.createMessage },
-	            "New Post"
+	            "div",
+	            null,
+	            React.createElement(
+	              "button",
+	              { onClick: this.createMessage },
+	              "New Message"
+	            )
 	          )
 	        )
 	      )
 	    );
 	  }
-	
 	});
 	
 	module.exports = User;
@@ -24995,10 +25052,63 @@
 /* 218 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(219);
+	var ApiUtil = __webpack_require__(159);
+	var LinkedStateMixin = __webpack_require__(219);
+	var React = __webpack_require__(1);
+	
+	var History = __webpack_require__(166).History;
+	
+	var Nav = React.createClass({
+	  displayName: 'Nav',
+	
+	
+	  mixins: [History, LinkedStateMixin],
+	
+	  goToIndex: function (e) {
+	    e.preventDefault();
+	    this.history.pushState(null, "/");
+	  },
+	
+	  handleLogOut: function (e) {
+	    e.preventDefault();
+	    ApiUtil.logOut();
+	  },
+	
+	  render: function () {
+	    return React.createElement(
+	      'div',
+	      { className: 'nav' },
+	      React.createElement(
+	        'div',
+	        { className: '' },
+	        React.createElement(
+	          'span',
+	          { className: 'button-link',
+	            onClick: this.goToIndex },
+	          'Index'
+	        ),
+	        React.createElement(
+	          'span',
+	          { className: 'button-link',
+	            onClick: this.handleLogOut },
+	          'Sign Out'
+	        )
+	      )
+	    );
+	  }
+	
+	});
+	
+	module.exports = Nav;
 
 /***/ },
 /* 219 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__(220);
+
+/***/ },
+/* 220 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -25015,8 +25125,8 @@
 	
 	'use strict';
 	
-	var ReactLink = __webpack_require__(220);
-	var ReactStateSetters = __webpack_require__(221);
+	var ReactLink = __webpack_require__(221);
+	var ReactStateSetters = __webpack_require__(222);
 	
 	/**
 	 * A simple mixin around ReactLink.forState().
@@ -25039,7 +25149,7 @@
 	module.exports = LinkedStateMixin;
 
 /***/ },
-/* 220 */
+/* 221 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -25113,7 +25223,7 @@
 	module.exports = ReactLink;
 
 /***/ },
-/* 221 */
+/* 222 */
 /***/ function(module, exports) {
 
 	/**
@@ -25222,10 +25332,10 @@
 	module.exports = ReactStateSetters;
 
 /***/ },
-/* 222 */
+/* 223 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Store = __webpack_require__(223).Store;
+	var Store = __webpack_require__(224).Store;
 	var AppDispatcher = __webpack_require__(161);
 	var CONSTANTS = __webpack_require__(165);
 	
@@ -25259,7 +25369,7 @@
 	module.exports = MessageStore;
 
 /***/ },
-/* 223 */
+/* 224 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -25271,15 +25381,15 @@
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 */
 	
-	module.exports.Container = __webpack_require__(224);
-	module.exports.MapStore = __webpack_require__(227);
-	module.exports.Mixin = __webpack_require__(239);
-	module.exports.ReduceStore = __webpack_require__(228);
-	module.exports.Store = __webpack_require__(229);
+	module.exports.Container = __webpack_require__(225);
+	module.exports.MapStore = __webpack_require__(228);
+	module.exports.Mixin = __webpack_require__(240);
+	module.exports.ReduceStore = __webpack_require__(229);
+	module.exports.Store = __webpack_require__(230);
 
 
 /***/ },
-/* 224 */
+/* 225 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -25301,10 +25411,10 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var FluxStoreGroup = __webpack_require__(225);
+	var FluxStoreGroup = __webpack_require__(226);
 	
 	var invariant = __webpack_require__(164);
-	var shallowEqual = __webpack_require__(226);
+	var shallowEqual = __webpack_require__(227);
 	
 	var DEFAULT_OPTIONS = {
 	  pure: true,
@@ -25462,7 +25572,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 225 */
+/* 226 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -25543,7 +25653,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 226 */
+/* 227 */
 /***/ function(module, exports) {
 
 	/**
@@ -25598,7 +25708,7 @@
 	module.exports = shallowEqual;
 
 /***/ },
-/* 227 */
+/* 228 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -25619,8 +25729,8 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var FluxReduceStore = __webpack_require__(228);
-	var Immutable = __webpack_require__(238);
+	var FluxReduceStore = __webpack_require__(229);
+	var Immutable = __webpack_require__(239);
 	
 	var invariant = __webpack_require__(164);
 	
@@ -25748,7 +25858,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 228 */
+/* 229 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -25769,9 +25879,9 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var FluxStore = __webpack_require__(229);
+	var FluxStore = __webpack_require__(230);
 	
-	var abstractMethod = __webpack_require__(237);
+	var abstractMethod = __webpack_require__(238);
 	var invariant = __webpack_require__(164);
 	
 	var FluxReduceStore = (function (_FluxStore) {
@@ -25855,7 +25965,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 229 */
+/* 230 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -25874,7 +25984,7 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var _require = __webpack_require__(230);
+	var _require = __webpack_require__(231);
 	
 	var EventEmitter = _require.EventEmitter;
 	
@@ -26038,7 +26148,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 230 */
+/* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -26051,14 +26161,14 @@
 	 */
 	
 	var fbemitter = {
-	  EventEmitter: __webpack_require__(231)
+	  EventEmitter: __webpack_require__(232)
 	};
 	
 	module.exports = fbemitter;
 
 
 /***/ },
-/* 231 */
+/* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -26077,11 +26187,11 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var EmitterSubscription = __webpack_require__(232);
-	var EventSubscriptionVendor = __webpack_require__(234);
+	var EmitterSubscription = __webpack_require__(233);
+	var EventSubscriptionVendor = __webpack_require__(235);
 	
-	var emptyFunction = __webpack_require__(236);
-	var invariant = __webpack_require__(235);
+	var emptyFunction = __webpack_require__(237);
+	var invariant = __webpack_require__(236);
 	
 	/**
 	 * @class BaseEventEmitter
@@ -26255,7 +26365,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 232 */
+/* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -26276,7 +26386,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var EventSubscription = __webpack_require__(233);
+	var EventSubscription = __webpack_require__(234);
 	
 	/**
 	 * EmitterSubscription represents a subscription with listener and context data.
@@ -26308,7 +26418,7 @@
 	module.exports = EmitterSubscription;
 
 /***/ },
-/* 233 */
+/* 234 */
 /***/ function(module, exports) {
 
 	/**
@@ -26362,7 +26472,7 @@
 	module.exports = EventSubscription;
 
 /***/ },
-/* 234 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -26381,7 +26491,7 @@
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
-	var invariant = __webpack_require__(235);
+	var invariant = __webpack_require__(236);
 	
 	/**
 	 * EventSubscriptionVendor stores a set of EventSubscriptions that are
@@ -26471,7 +26581,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 235 */
+/* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -26526,7 +26636,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 236 */
+/* 237 */
 /***/ function(module, exports) {
 
 	/**
@@ -26568,7 +26678,7 @@
 	module.exports = emptyFunction;
 
 /***/ },
-/* 237 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -26595,7 +26705,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 238 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -31579,7 +31689,7 @@
 	}));
 
 /***/ },
-/* 239 */
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -31596,7 +31706,7 @@
 	
 	'use strict';
 	
-	var FluxStoreGroup = __webpack_require__(225);
+	var FluxStoreGroup = __webpack_require__(226);
 	
 	var invariant = __webpack_require__(164);
 	
@@ -31702,14 +31812,14 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 240 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var ApiUtil = __webpack_require__(159);
-	var UsersStore = __webpack_require__(241);
+	var UsersStore = __webpack_require__(242);
 	var React = __webpack_require__(1);
-	var Nav = __webpack_require__(242);
-	var LinkedStateMixin = __webpack_require__(218);
+	var Nav = __webpack_require__(218);
+	var LinkedStateMixin = __webpack_require__(219);
 	
 	var cur = window.current_user_id;
 	
@@ -31752,14 +31862,18 @@
 	      "div",
 	      { className: "" },
 	      React.createElement(Nav, null),
+	      React.createElement(
+	        "header",
+	        null,
+	        "Choose a Friend to Message"
+	      ),
 	      this.state.users.map(function (user, idx) {
 	        return React.createElement(
 	          "div",
-	          { className: "",
-	            key: user.id * 77 },
+	          { key: user.id * 77 },
 	          React.createElement(
-	            "span",
-	            { className: "name-column",
+	            "div",
+	            { className: "name-link",
 	              onClick: this.handleUserClick.bind(null, user.id) },
 	            user.username
 	          )
@@ -31773,10 +31887,10 @@
 	module.exports = Index;
 
 /***/ },
-/* 241 */
+/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Store = __webpack_require__(223).Store;
+	var Store = __webpack_require__(224).Store;
 	var AppDispatcher = __webpack_require__(161);
 	var CONSTANTS = __webpack_require__(165);
 	
@@ -31812,63 +31926,6 @@
 	window.UserStore = UserStore;
 	
 	module.exports = UserStore;
-
-/***/ },
-/* 242 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var ApiUtil = __webpack_require__(159);
-	var LinkedStateMixin = __webpack_require__(218);
-	var React = __webpack_require__(1);
-	
-	var History = __webpack_require__(166).History;
-	
-	var Nav = React.createClass({
-	  displayName: 'Nav',
-	
-	
-	  mixins: [History, LinkedStateMixin],
-	
-	  goToIndex: function (e) {
-	    e.preventDefault();
-	    this.history.pushState(null, "/");
-	  },
-	
-	  handleLogOut: function (e) {
-	    e.preventDefault();
-	    ApiUtil.logOut();
-	  },
-	
-	  render: function () {
-	    return React.createElement(
-	      'div',
-	      { className: '' },
-	      React.createElement(
-	        'header',
-	        null,
-	        'Instant Messager'
-	      ),
-	      React.createElement(
-	        'div',
-	        { className: 'nav-center' },
-	        React.createElement(
-	          'span',
-	          { onClick: this.goToIndex },
-	          'Index'
-	        ),
-	        React.createElement(
-	          'span',
-	          { className: 'l',
-	            onClick: this.handleLogOut },
-	          'Sign Out'
-	        )
-	      )
-	    );
-	  }
-	
-	});
-	
-	module.exports = Nav;
 
 /***/ }
 /******/ ]);

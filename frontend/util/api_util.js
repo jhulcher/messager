@@ -44,7 +44,6 @@ var ApiUtil = {
       },
       success: function (response) {
         ApiActions.receiveMessages(response);
-        // socket.emit("RECEIVE_MESSAGES", ApiActions.receiveMessages(response));
       }
     });
   },

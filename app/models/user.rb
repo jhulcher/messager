@@ -12,6 +12,11 @@ class User < ActiveRecord::Base
   foreign_key: :talker_id,
   class_name: "Message"
 
+  has_one :message,
+  primary_key: :id,
+  foreign_key: :listener_id,
+  class_name: "Message"
+
   def self.find_by_credentials(username, password)
     user = User.find_by(username: username)
     return nil unless user && user.valid_password?(password)

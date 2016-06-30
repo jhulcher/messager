@@ -20,22 +20,19 @@ var Nav = React.createClass({
 
   render: function () {
     return (
+      <div className="nav">
         <div className="">
-          <header>
-            Instant Messager
-          </header>
-          <div className="nav-center">
-          
-            <span onClick={this.goToIndex}>
-              Index
-            </span>
+          <span className="button-link"
+                onClick={this.goToIndex}>
+            Index
+          </span>
+          <span className="button-link"
+              onClick={this.handleLogOut}>
+            Sign Out
+          </span>
 
-            <span className="l"
-                onClick={this.handleLogOut}>
-              Sign Out
-            </span>
-          </div>
         </div>
+      </div>
     );
   }
 

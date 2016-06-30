@@ -9,6 +9,7 @@ class Api::MessagesController < ApplicationController
     @message.talker_id = current_user.id
     @message.save!
     @messages1 = Message.where(talker_id: current_user.id, listener_id: @message.listener_id)
+    @user = @message.listener
     @messages2 = Message.where(talker_id: @message.listener_id, listener_id: current_user.id)
     @messages = ((@messages1.concat(@messages2)).sort_by { |mess| mess.created_at }).uniq
   end

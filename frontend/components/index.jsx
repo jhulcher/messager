@@ -45,15 +45,17 @@ var Index = React.createClass({
     return (
       <div className="">
         <Nav></Nav>
+        <header>
+          Choose a Friend to Message
+        </header>
         {
           this.state.users.map (function (user, idx) {
             return (
-              <div  className=""
-                    key={user.id * 77}>
-                <span className="name-column"
+              <div key={user.id * 77}>
+                <div className="name-link"
                       onClick={this.handleUserClick.bind(null, user.id)}>
                   {user.username}
-                </span>
+                </div>
               </div>
             )
           }.bind(this))

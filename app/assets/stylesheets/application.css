@@ -13,3 +13,166 @@
  *= require_tree .
  *= require_self
  */
+
+body {
+  color: black;
+  font-size: 20px;
+  font-family: montserrat;
+  font-weight: normal;
+}
+
+header {
+  padding-top: 20px;
+  padding-bottom: 15px;
+}
+
+span {
+  padding: 10px;
+}
+
+.link:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.nav {
+  padding-top: 20px;
+  padding-bottom: 10px;
+}
+
+.name-link {
+  padding: 10px;
+}
+
+.name-link:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.full-page {
+  width: 500px;
+}
+
+.title-left {
+  float: left;
+  clear: both;
+}
+
+.title-right {
+  float: right;
+  clear: both;
+}
+
+.message-left {
+  float: left;
+  clear: both;
+  background-color: #1aff1a;
+  width: 200px;
+  padding: 15px;
+  margin: 5px;
+  border-radius: 7px;
+  position: relative;
+}
+
+.message-left:before {
+  content: '  ';
+  position: absolute;
+  left: -10px;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right:10px solid #1aff1a;
+}
+
+.message-right {
+  float: right;
+  clear: both;
+  background-color: #1ad1ff;
+  width: 200px;
+  padding: 15px;
+  margin: 5px;
+  border-radius: 7px;
+  position: relative;
+}
+
+.message-right:before {
+  content: '  ';
+  position: absolute;
+  right: -10px;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-left:10px solid #1ad1ff;
+}
+
+.message-box {
+  padding-top: 15px;
+  clear: both;
+}
+
+.button-link {
+  width: 100px;
+  background-color: gold;
+  margin: 15px;
+  border-radius: 7px;
+}
+
+.button-link:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.title {
+  font-family: Courgette;
+  padding: 20px;
+  font-size: 30px;
+  font-weight: bold;
+  color: blue;
+}
+
+.splash {
+  text-align: center;
+  display: inline;
+  top: 30%;
+  display: table;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+input {
+  width: 200px;
+  border-radius: 4px;
+  border-width: 1px solid black;
+  margin: 2px;
+}
+
+input[type=submit] {
+  width: 200px;
+  padding: 5px;
+  margin: 5px;
+  border-width: 1px solid black;
+  border-radius: 4px;
+}
+
+button {
+  width: 200px;
+  padding: 5px;
+  margin: 5px;
+  border-width: 1px solid black;
+  border-radius: 4px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+//

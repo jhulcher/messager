@@ -5,4 +5,9 @@ class Message < ActiveRecord::Base
   foreign_key: :talker_id,
   class_name: "User"
 
+  belongs_to :listener,
+  primary_key: :id,
+  foreign_key: :listener_id,
+  class_name: "User"
+
 end
