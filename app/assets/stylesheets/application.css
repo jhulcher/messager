@@ -194,7 +194,7 @@ button {
   }
 
   .full-page {
-    width: 80%;
+    width: 100%;
   }
 
   button {
@@ -208,33 +208,43 @@ button {
   }
 
   .message-left {
-    width: 400px;
+    width: 500px;
     padding: 15px;
+    min-height: 200px;
     margin: 5px;
-    border-radius: 7px;
+    border-radius: 10px;
   }
 
   .message-left:before {
     left: -10px;
     height: 0;
-    border-top: 20px solid transparent;
-    border-bottom: 20px solid transparent;
-    border-right: 20px solid #1aff1a;
+    border-top: 40px solid transparent;
+    border-bottom: 40px solid transparent;
+    border-right: 40px solid #1aff1a;
   }
 
   .message-right {
-    width: 400px;
+    width: 500px;
+    min-height: 200px;
+
     padding: 15px;
     margin: 5px;
-    border-radius: 7px;
+    border-radius: 10px;
   }
 
   .message-right:before {
     right: -10px;
     height: 0;
-    border-top: 20px solid transparent;
-    border-bottom: 20px solid transparent;
-    border-left: 20px solid #1ad1ff;
+    border-top: 40px solid transparent;
+    border-bottom: 40px solid transparent;
+    border-left: 40px solid #1ad1ff;
+  }
+
+  .button-link {
+    width: 200px;
+    background-color: gold;
+    margin: 30px;
+    border-radius: 10px;
   }
 
 }
