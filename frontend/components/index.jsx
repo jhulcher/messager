@@ -46,7 +46,7 @@ var Index = React.createClass({
       <div className="">
         <Nav></Nav>
         <header>
-          Choose a Friend to Message
+          Choose a Friend to Message:
         </header>
         {
           this.state.users.map (function (user, idx) {

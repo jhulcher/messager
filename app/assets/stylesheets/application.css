@@ -22,7 +22,7 @@ body {
 }
 
 header {
-  padding-top: 20px;
+  padding-top: 30px;
   padding-bottom: 15px;
 }
 
@@ -36,8 +36,8 @@ span {
 }
 
 .nav {
-  padding-top: 20px;
-  padding-bottom: 10px;
+  padding-top: 40px;
+  padding-bottom: 20px;
 }
 
 .name-link {
@@ -111,10 +111,10 @@ span {
 }
 
 .button-link {
-  width: 100px;
   background-color: gold;
-  margin: 15px;
+  margin: 0px 15px 0px 15px;;
   border-radius: 7px;
+  padding: 20px 30px 20px 30px;
 }
 
 .button-link:hover {
@@ -242,11 +242,13 @@ button {
   }
 
   .button-link {
-    width: 450px;
-    padding: 15px;
-    background-color: gold;
+    padding: 25px;
     margin: 30px;
     border-radius: 10px;
+
+    margin: 0px 35px 0px 35px;;
+    border-radius: 10px;
+    padding: 40px 60px 40px 60px;
   }
 
   span {
@@ -256,6 +258,7 @@ button {
   header {
     padding-top: 30px;
     padding-bottom: 25px;
+    font-size: 55px;
   }
 
   .nav {

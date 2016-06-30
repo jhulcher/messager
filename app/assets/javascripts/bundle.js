@@ -31865,7 +31865,7 @@
 	      React.createElement(
 	        "header",
 	        null,
-	        "Choose a Friend to Message"
+	        "Choose a Friend to Message:"
 	      ),
 	      this.state.users.map(function (user, idx) {
 	        return React.createElement(
