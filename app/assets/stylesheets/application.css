@@ -193,6 +193,50 @@ button {
     font-size: 60px;
   }
 
+  .full-page {
+    width: 80%;
+  }
+
+  button {
+    width: 600px;
+    padding: 10px;
+    margin: 5px;
+    border-width: 1px solid black;
+    border-radius: 4px;
+    font-size: 40px;
+    height: 90px;
+  }
+
+  .message-left {
+    width: 400px;
+    padding: 15px;
+    margin: 5px;
+    border-radius: 7px;
+  }
+
+  .message-left:before {
+    left: -10px;
+    height: 0;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    border-right: 20px solid #1aff1a;
+  }
+
+  .message-right {
+    width: 400px;
+    padding: 15px;
+    margin: 5px;
+    border-radius: 7px;
+  }
+
+  .message-right:before {
+    right: -10px;
+    height: 0;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    border-left: 20px solid #1ad1ff;
+  }
+
 }
 
 
