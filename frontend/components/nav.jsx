@@ -30,7 +30,6 @@ var Nav = React.createClass({
               onClick={this.handleLogOut}>
             Sign Out
           </span>
-
         </div>
       </div>
     );

@@ -242,7 +242,7 @@ button {
   }
 
   .button-link {
-    width: 350px;
+    width: 450px;
     padding: 15px;
     background-color: gold;
     margin: 30px;
@@ -256,6 +256,10 @@ button {
   header {
     padding-top: 30px;
     padding-bottom: 25px;
+  }
+
+  .nav {
+    padding-top: 50px;
   }
 
 }
