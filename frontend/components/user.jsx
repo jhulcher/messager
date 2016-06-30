@@ -60,7 +60,7 @@ var User = React.createClass({
             this.state.messages.map (function (message, idx) {
               if (!(message.body)) {
                 return (
-                    <header>
+                    <header key={idx * 17}>
                       {"Messages with" + " " + message.friend + ":"}
                     </header>
                 )

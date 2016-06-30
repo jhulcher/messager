@@ -24958,7 +24958,7 @@
 	          if (!message.body) {
 	            return React.createElement(
 	              "header",
-	              null,
+	              { key: idx * 17 },
 	              "Messages with" + " " + message.friend + ":"
 	            );
 	          } else if (idx == 0 && message.user_id != cur) {
