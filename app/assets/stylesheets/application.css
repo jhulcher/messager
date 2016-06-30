@@ -194,7 +194,7 @@ button {
   }
 
   .full-page {
-    width: 100%;
+    width: 90%;
   }
 
   button {
@@ -217,7 +217,7 @@ button {
   }
 
   .message-left:before {
-    left: -30px;
+    left: -35px;
     height: 0;
     border-top: 40px solid transparent;
     border-bottom: 40px solid transparent;
@@ -234,7 +234,7 @@ button {
   }
 
   .message-right:before {
-    right: -30px;
+    right: -35px;
     height: 0;
     border-top: 40px solid transparent;
     border-bottom: 40px solid transparent;
@@ -242,7 +242,8 @@ button {
   }
 
   .button-link {
-    width: 200px;
+    width: 250px;
+    padding: 15px;
     background-color: gold;
     margin: 30px;
     border-radius: 10px;
