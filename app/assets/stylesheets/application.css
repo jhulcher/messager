@@ -218,7 +218,7 @@ button {
 
   .message-left:before {
     left: -35px;
-    height: -10;
+    height: 0;
     border-top: 40px solid transparent;
     border-bottom: 40px solid transparent;
     border-right: 40px solid #1aff1a;
@@ -235,7 +235,7 @@ button {
 
   .message-right:before {
     right: -35px;
-    height: -10;
+    height: 0;
     border-top: 40px solid transparent;
     border-bottom: 40px solid transparent;
     border-left: 40px solid #1ad1ff;
@@ -247,6 +247,15 @@ button {
     background-color: gold;
     margin: 30px;
     border-radius: 10px;
+  }
+
+  span {
+    padding: 30px;
+  }
+
+  header {
+    padding-top: 30px;
+    padding-bottom: 25px;
   }
 
 }
